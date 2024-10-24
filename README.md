@@ -1,5 +1,6 @@
 # gitlab-nuget-sample
-Create .net library and deploy to a gitlab Package Registry
+Create .net library called **MyLibrary1** and deploy to a gitlab Package Registry
+**MyLibrary1** will create a **nupkg** file and deployed to **12345** project in gitlab and then this file can be referenciated by another project **MyProject2**
 
 ## Steps followed when creating the nuget package
 1. in your library project (MyLibrary1) add gitlab ci file
@@ -10,7 +11,7 @@ Create .net library and deploy to a gitlab Package Registry
 
 
 ## How to use it in your project
-In the project where you want to use the package you need to:
+In the project (MyProject2) where you want to use the package you need to:
 1. add **nuget.config** file that will contain
    1. the **name** and **url** of the package gitlab project
    2. **username** and **password** that are read from gitlab variables

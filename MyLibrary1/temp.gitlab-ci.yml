@@ -1,0 +1,40 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  NUGET_PROJECT: MyLibrary1
+
+image: ${G_DOCKER_REGISTRY}/dotnet/sdk:6.0.101
+
+
+build:
+  stage: build
+  tags:
+    - mytags
+  script:
+    - cd ${NUGET_PROJECT}
+    - dotnet restore
+    - dotnet build
+      /warnaserror
+      --no-restore
+      --configuration Release
+      -p:VersionPrefix=${PACKAGE_VERSION} --version-suffix "${PACKAGE_VERSION_SUFFIX}"
+
+unit-tests:
+  stage: test
+  tags:
+    - mytags
+  script:
+    - dotnet test  /warnaserror
+
+nuget-push:
+  stage: deploy
+  when: manual
+  tags:
+    - mytags
+  script:
+    - cd ${NUGET_PROJECT}
+    - dotnet pack -c Release    
+    - dotnet nuget push "bin/Release/*.nupkg" --source "${CI_API_V4_URL}/projects/12345/packages/nuget/index.json" --skip-duplicate -k $GITLAB_PACKAGE_REGISTRY_PASSWORD
