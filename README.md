@@ -1,5 +1,5 @@
 # gitlab-nuget-sample
-Create .net library and deploy to a giltab Package Registry
+Create .net library and deploy to a gitlab Package Registry
 
 ## Steps followed when creating the nuget package
 1. in your library project (MyLibrary1) add gitlab ci file
